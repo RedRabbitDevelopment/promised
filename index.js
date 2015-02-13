@@ -124,7 +124,7 @@ should.Assertion.prototype.rejectedWith = function(message, properties) {
       that.fail();
     }
 
-    var errorMatched = true, errorInfo = '';
+    var errorMatched = true, errorInfo = '', messageStr;
 
     if('string' == typeof message) {
       errorMatched = message == err.message;
@@ -147,7 +147,8 @@ should.Assertion.prototype.rejectedWith = function(message, properties) {
 
     if(!errorMatched) {
       if('string' == typeof message || message instanceof RegExp) {
-        errorInfo = " with a message matching " + message + ", but got '" + err.message + "'";
+        messageStr = message instanceof RegExp ? message : "'" + message + "'";
+        errorInfo = " with a message matching " + messageStr + ", but got '" + err.message + "'";
       } else if('function' == typeof message) {
         errorInfo = " of type " + util.functionName(message) + ", but got " + util.functionName(err.constructor);
       }
